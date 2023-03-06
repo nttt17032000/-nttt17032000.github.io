@@ -16,6 +16,7 @@
 
   <style>
     @import url(//fonts.googleapis.com/css?family=Great+Vibes);
+
     html,
     body {
 
@@ -38,6 +39,34 @@
       height: 100%;
 
     }
+
+    .container {
+      color: #333;
+      margin: 0 auto;
+      text-align: center;
+      margin-top: -70px
+    }
+
+    li {
+      display: inline-block;
+      list-style-type: none;
+      padding: 1em;
+    }
+
+    span {
+      display: block;
+      font-size: 400 50px/0.8;
+    }
+
+    .emoji {
+      display: none;
+      padding: 1rem;
+    }
+
+    .emoji span {
+      font-size: 4rem;
+      padding: 0 .5rem;
+    }
   </style>
 
 </HEAD>
@@ -52,13 +81,32 @@
     <h1 style="font: 400 40px/0.8 'Great Vibes', Helvetica, sans-serif;color: pink;">17/03/2000</h1>
   </div>
   <div style="width: 100%; display: flex; justify-content: center; margin-top: -50px">
-    <p style="font: 400 40px/0.8 'Great Vibes', Helvetica, sans-serif;color: pink;">Sending you lots of love and best wishes on your special day!</p>
+    <p style="font: 400 40px/0.8 'Great Vibes', Helvetica, sans-serif;color: pink;">Sending you lots of love and best
+      wishes on your special day!</p>
+  </div>
+  <div class="container">
+    <div id="countdown">
+      <ul>
+        <li style="font: 400 40px/0.8 'Great Vibes', Helvetica, sans-serif;color: pink;"><span id="days"></span>Days
+        </li>
+        <li style="font: 400 40px/0.8 'Great Vibes', Helvetica, sans-serif;color: pink;"><span id="hours"></span>Hours
+        </li>
+        <li style="font: 400 40px/0.8 'Great Vibes', Helvetica, sans-serif;color: pink;"><span id="minutes">
+          </span>Minutes</li>
+        <li style="font: 400 40px/0.8 'Great Vibes', Helvetica, sans-serif;color: pink;"><span id="seconds"></span>Seconds</li>
+      </ul>
+    </div>
+    <div id="content" class="emoji">
+      <span>🥳</span>
+      <span>🎉</span>
+      <span>🎂</span>
+    </div>
   </div>
   <div style="
     width: 100%;
     height: 100%;
     position: absolute;">
-    <div style="width: 100%;height: 100%;display: flex;justify-content: center;align-items: center;margin-top: -220px;">
+    <div style="width: 100%;height: 100%;display: flex;justify-content: center;align-items: center;margin-top: -320px;">
       <div>
         <h1 style="font: 400 40px/0.8 'Great Vibes', Helvetica, sans-serif;color: pink;">Nguyễn Thị</h1>
         <h1 style="font: 400 40px/0.8 'Great Vibes', Helvetica, sans-serif;color: pink;">Tuyết Trinh</h1>
@@ -533,6 +581,49 @@
 
     })(document.getElementById('pinkboard'));
 
+    (function () {
+      const second = 1000,
+        minute = second * 60,
+        hour = minute * 60,
+        day = hour * 24;
+
+      //I'm adding this section so I don't have to keep updating this pen every year :-)
+      //remove this if you don't need it
+      let today = new Date(),
+        dd = String(today.getDate()).padStart(2, "0"),
+        mm = String(today.getMonth() + 1).padStart(2, "0"),
+        yyyy = today.getFullYear(),
+        nextYear = yyyy + 1,
+        dayMonth = "03/17/",
+        birthday = dayMonth + yyyy;
+
+      today = mm + "/" + dd + "/" + yyyy;
+      if (today > birthday) {
+        birthday = dayMonth + nextYear;
+      }
+      //end
+
+      const countDown = new Date(birthday).getTime(),
+        x = setInterval(function () {
+
+          const now = new Date().getTime(),
+            distance = countDown - now;
+
+          document.getElementById("days").innerText = Math.floor(distance / (day)),
+            document.getElementById("hours").innerText = Math.floor((distance % (day)) / (hour)),
+            document.getElementById("minutes").innerText = Math.floor((distance % (hour)) / (minute)),
+            document.getElementById("seconds").innerText = Math.floor((distance % (minute)) / second);
+
+          //do something later when date is reached
+          if (distance < 0) {
+            document.getElementById("headline").innerText = "It's my birthday!";
+            document.getElementById("countdown").style.display = "none";
+            document.getElementById("content").style.display = "block";
+            clearInterval(x);
+          }
+          //seconds
+        }, 0)
+    }());
   </script>
 </BODY>
 
